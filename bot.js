@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const config = require('../secrets/discord-credentials.json')
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
 
 // global vars
 const client = new Discord.Client()
