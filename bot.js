@@ -1,18 +1,18 @@
-const Discord = require('discord.js')
-const config = require('../secrets/discord-credentials.json')
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
+const Discord = require('discord.js');
+const config = require('../secrets/discord-credentials.json');
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 // global vars
-const client = new Discord.Client()
-const xmlhttp = new XMLHttpRequest()
-const url = "https://api.coindesk.com/v1/bpi/currentprice.json"
-let time
-let usdValue
+const client = new Discord.Client();
+const xmlhttp = new XMLHttpRequest();
+const url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+let time;
+let usdValue;
 
 // connect to Discord
-client.login(config.token)
+client.login(config.token);
 client.on('ready', () => {
-    console.log("Connected as " + client.user.tag)
+    console.log("Connected as " + client.user.tag);
 })
 		
 // get JSON
@@ -21,9 +21,9 @@ xmlhttp.send();
 xmlhttp.onreadystatechange = function() {
 	if (this.readyState == 4  &&  this.status == 200) {
 		let json = JSON.parse(this.responseText);
-    	parseJson(json);
+		parseJson(json);
 	}		
-};
+}
 
 // parse JSON
 function parseJson(json) {
@@ -41,4 +41,4 @@ client.on('message', message => {
 	if (command === 'btc') {
 		message.channel.send(time + "\n" + usdValue);
 	} 
-});
+})
