@@ -4,8 +4,8 @@ const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
 
 // global vars
 const client = new Discord.Client()
-const xmlhttp = new XMLHttpRequest();
-const url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+const xmlhttp = new XMLHttpRequest()
+const url = "https://api.coindesk.com/v1/bpi/currentprice.json"
 let time
 let usdValue
 
@@ -22,14 +22,14 @@ xmlhttp.onreadystatechange = function() {
 	if (this.readyState == 4  &&  this.status == 200) {
 		let json = JSON.parse(this.responseText);
     	parseJson(json);
-  }		
+	}		
 };
 
 // parse JSON
 function parseJson(json) {
 	time = "Last Updated : " + json["time"]["updated"];
 	usdValue = "1 BTC equals $" + json["bpi"]["USD"]["rate"];
-  }
+}
 
 // post message in Discord when bot is pinged
 client.on('message', message => {
