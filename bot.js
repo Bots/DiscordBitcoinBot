@@ -1,34 +1,37 @@
 const Discord = require('discord.js')
 const config = require('../secrets/discord-credentials.json')
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
+
+// global vars
 const client = new Discord.Client()
+const xmlhttp = new XMLHttpRequest();
+const url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+let time
+let usdValue
 
-var time
-var usdValue
-
-
+// connect to Discord
+client.login(config.token)
 client.on('ready', () => {
     console.log("Connected as " + client.user.tag)
 })
-
-var xmlhttp = new XMLHttpRequest();
-var url = "https://api.coindesk.com/v1/bpi/currentprice.json";
 		
+// get JSON
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
 xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4  &&  this.status == 200) {
-    var json = JSON.parse(this.responseText);
-    parseJson(json);
+	if (this.readyState == 4  &&  this.status == 200) {
+		let json = JSON.parse(this.responseText);
+    	parseJson(json);
   }		
 };
 
+// parse JSON
 function parseJson(json) {
 	time = "Last Updated : " + json["time"]["updated"];
 	usdValue = "1 BTC equals $" + json["bpi"]["USD"]["rate"];
   }
 
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
-
+// post message in Discord when bot is pinged
 client.on('message', message => {
 	if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
@@ -39,6 +42,3 @@ client.on('message', message => {
 		message.channel.send(time + "\n" + usdValue);
 	} 
 });
-
-client.login(config.token)
-
