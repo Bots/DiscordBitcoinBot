@@ -27,7 +27,8 @@ xmlhttp.onreadystatechange = function() {
 
 // parse JSON
 function parseJson(json) {
-	time = "Last Updated : " + json["time"]["updated"];
+	timeDate = new Date(json["time"]["updated"]);
+	time = "Last Updated : " + timeDate
 	usdValue = "1 BTC equals $" + json["bpi"]["USD"]["rate"];
 }
 
